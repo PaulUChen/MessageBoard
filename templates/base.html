@@ -1,0 +1,83 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Bootstrap -->
+  <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  <title>{% block title %}MessageBoard{% endblock %}</title>
+</head>
+<body style="background-color:#BFBFBF">
+  {# Navigation Menu #}
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
+      <div class="col-md-9" >
+          <h1><a class="navbar-brand mx-auto" href="/" ><font size="10">MessageBoard</font></a></h1>
+      </div>
+      <div class="col-md-3">
+          <ul class="navbar-nav ml-auto navbar-right">
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <a href="#"><span class="glyphicon glyphicon-user"></span>{{user.username}}
+                  </a>
+
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Log out</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Log in</a>
+              </li>
+              <a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span>signup</a>
+              {% endif %}
+          </ul>
+      </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    {% block content %}
+      <div class="row justify-content-center">
+          <div class="col-md-1">Hello</div>
+          <div class="col-md-8 justify-content-center">
+				<div style="background-color:#" >
+                    {% for Post in Posts %}
+                    <div class="contentDiv" style="background-color:#F0F8FF">
+                        <p class="title">第{{Post.id}}則 留言：{{Post.title}}</p>
+                        <p >作者：{{Post.author}}</p>
+                        <p>發布時間：{{Post.date}}</p>
+                        <p>{{Post.content}}</p>
+                    </div>
+					{% endfor %}
+				</div>
+          </div>
+          <div class="col-md-3">
+
+          </div>
+      </div>
+      <div class="row justify-content-center">
+		  {% if currentpage > 1 %}
+			  <button onclick="location.href='/index/prev/'" style="background-color:#FFBB73"><h4><span class="glyphicon glyphicon-circle-arrow-left"></span>上一頁</h4></button>
+		  {% endif %}
+		  {% if currentpage < totpage %}
+			  <button onclick="location.href='/index/next/'" style="background-color:#FFBB73"><h4><span class="glyphicon glyphicon-circle-arrow-right"></span>下一頁</h4></button>
+		  {% endif %}
+		</div>
+    {% endblock %}
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}MessageBoard Edit{% endblock %}
+
+{% block content %}
+    <div class="row">      </div>
+    <div class="row justify-content-center">
+    <table style="background-color:#F0F8FF">
+          <form action="/edit/{{id}}/1/" method="POST" name="form1">
+            {% csrf_token %}
+            <table  border="0" cellspacing="1" cellpadding="4">
+              <tr>
+                <th width="80" align="right" valign="baseline">標題</th>
+                <td valign="baseline">
+                    <input name="title" type="text" value="{{title}}"/>
+                </td>
+              </tr>
+                <tr>
+                <th align="right" valign="baseline">作者</th>
+                <td valign="baseline">{{ user.get_username }}</td>
+              </tr>
+              <tr>
+                <th align="right" valign="baseline">內容</th>
+                <td>
+                    <input name="content" size="100" type="text" height="100" width="100" value="{{content}}"/>
+                </td>
+              </tr>
+              <tr>
+                <th colspan="2" align="center" valign="baseline">
+                  <input type="submit" name="button" id="button" value="送出">
+              </tr>
+            </table>
+          </form>
+    </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10"></div>
+    <div class="col-md-2" style="background-color:#D3D3D3">
+        {% if user.is_authenticated %}
+        <p style="font-size:15pt">
+        <a href="/post"><span class="glyphicon glyphicon-plus"></span>我要新增留言</a>
+        </p>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div style="background-color:#" >
+            {% for Post in Posts %}
+                {% if Post.author == user.email %}
+            <div class="justify-content-center" style="background-color:#FAEBD7">
+                <p class="title">第{{Post.id}}則 留言：{{Post.title}}</p>
+                <p >作者：{{Post.author}} </p>
+                <p>發布時間：{{Post.date}}</p>
+                <p>{{Post.content}}</p>
+                <p >
+                     <a href="/edit/{{Post.id}}/"><span class="glyphicon glyphicon-pencil "></span>您的留言，可進行編輯</a>
+                </p>
+            </div>
+                {% else %}
+            <div class="justify-content-center" style="background-color:#F0F8FF">
+                <p class="title">第{{Post.id}}則 留言：{{Post.title}}</p>
+                <p >作者：{{Post.author}}</p>
+                <p>發布時間：{{Post.date}}</p>
+                <p>{{Post.content}}</p>
+            </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+    <div class="row justify-content-between">
+		  {% if currentpage > 1 %}
+			  <button onclick="location.href='/home/prev/'" style="background-color:#FFBB73"><h4><span class="glyphicon glyphicon-circle-arrow-left"></span>上一頁</h4></button>
+		  {% endif %}
+		  {% if currentpage < totpage %}
+			  <button onclick="location.href='/home/next/'" style="background-color:#FFBB73"><h4><span class="glyphicon glyphicon-circle-arrow-right"></span>下一頁</h4></button>
+		  {% endif %}
+    </div>
+
+{% endblock %}
+

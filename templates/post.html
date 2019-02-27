@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}MessageBoard add{% endblock %}
+
+{% block content %}
+    <table style="background-color:#F0F8FF">
+          <form action="." method="POST" name="form1">
+            {% csrf_token %}
+            <table width="100%" border="0" cellspacing="1" cellpadding="4">
+              <tr>
+                <th width="80" align="right" valign="baseline">標題</th>
+                <td valign="baseline">{{postform.title}}</td>
+              </tr>
+                <tr>
+                <th align="right" valign="baseline">作者</th>
+                <td valign="baseline">{{ user.get_username }}</td>
+              </tr>
+              <tr>
+                <th align="right" valign="baseline">內容</th>
+                <td valign="baseline">{{postform.content}}</td>
+              </tr>
+              <tr>
+                <th colspan="2" align="center" valign="baseline">
+                  <input type="submit" name="button" id="button" value="送出">
+              </tr>
+            </table>
+            <span style="color:red">{{message}}</span>
+          </form>
+    </table>
+{% endblock %}
